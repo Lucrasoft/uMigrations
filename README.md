@@ -12,3 +12,8 @@ What is uMigrations NOT
 -----------
 
 uMigrations is not a Code-First library, nor does it aspires to be one. uMigrations will help the developers to programmatically change the Umbraco database (Pages, settings, document types, templates etc) without hitting the backend. This way changes are stored into source control and are replicable across multiple databases (for example: multiple developer's databases, a test environment and (one or more) prodution environments)
+
+Usage
+-----------
+
+See https://github.com/Lucrasoft/uMigrations/wiki/Usage for exmaples
