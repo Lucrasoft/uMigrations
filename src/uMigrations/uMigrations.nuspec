@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Lucrasoft.uMigrations</id>
+    <version>1.0.0</version>
+    <title>Lucrasoft uMigrations</title>
+    <authors>Lucrasoft Solutions BV</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Migration package for to easily upgrade to newer content versions</description>
+    <dependencies>
+		<group>
+      <dependency id="UmbracoCms" version="[7.1.6,8.0.0)" />
+		</group>
+    </dependencies>
+    <iconUrl>http://www.lucrasoft.nl/static/webcore-logo.png</iconUrl>
+  </metadata>
+  <files>
+    <file src="bin\release\Lucrasoft.Migrations.dll" target="lib\net45" />
+    <file src="bin\release\Lucrasoft.Migrations.pdb" target="lib\net45" />
+    <file src="bin\release\Lucrasoft.Migrations.xml" target="lib\net45" />
+
+    <file src="**\*.cs" target="src" />
+  </files>
+</package>
