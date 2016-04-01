@@ -1,0 +1,24 @@
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+	
+  <PropertyGroup>
+		<RestorePackages>true</RestorePackages>
+		<OutputFolder>$(BuildOutput)</OutputFolder>
+		<SolutionProperties>
+					OutDir=$(OutputFolder);
+					Platform=Any CPU;
+					Configuration=Release
+		</SolutionProperties>
+    <PrecompileRazorFiles>true</PrecompileRazorFiles>
+  </PropertyGroup>
+  
+  <ItemGroup>
+		<Solution Include="..\src\uMigrations.sln">
+			<Properties>$(SolutionProperties)</Properties>
+		</Solution>
+	</ItemGroup>
+	<Target Name="Build">
+    <Message Text="Building project" />
+    <MSBuild Projects="@(Solution)"/>
+	</Target>
+</Project>
