@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Lucrasoft.Migrations.Database;
-using umbraco.BusinessLogic;
 using Umbraco.Core;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
@@ -16,6 +14,7 @@ namespace Lucrasoft.Migrations
     public class Migrator
     {
         private readonly IEnumerable<IMigrationsProvider> migrationProviders;
+        private static readonly string Version = typeof (Migrator).Assembly.GetName().Version.ToString();
 
         public Migrator(IEnumerable<IMigrationsProvider> migrationProviders)
         {
@@ -36,7 +35,7 @@ namespace Lucrasoft.Migrations
         {
             if (!applicationContext.IsConfigured || !applicationContext.DatabaseContext.IsDatabaseConfigured)
             {
-                LogHelper.Debug<Migrator>("No need to run migrations now, the application is not configured or the database is not configured");
+                LogHelper.Debug<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - No need to run migrations now, the application is not configured or the database is not configured", Version));
                 return;
             }
 
@@ -44,9 +43,10 @@ namespace Lucrasoft.Migrations
 
             var migrationsDictionary = ExtractMigrations();
 
-            LogHelper.Debug<Migrator>(string.Format("Found the following migrations: {0}", 
-                                      string.Join(",", migrationsDictionary.Keys)));
+            LogHelper.Debug<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - Found the following migrations: {1}",
+                                      Version, string.Join(",", migrationsDictionary.Keys)));
 
+            LogHelper.Info<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - Running migrations", Version));
             ExecuteMigrations(applicationContext, migrationsDictionary);
         }
 
@@ -90,17 +90,18 @@ namespace Lucrasoft.Migrations
             {
                 if (databaseMigrations.Contains(migration.Key, CaseInsensitiveStringComparer.Instance))
                 {
-                    LogHelper.Debug<Migrator>(string.Format("Skipping migration '{0}' because it has already been executed", migration.Key));
+                    LogHelper.Debug<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - Skipping migration '{1}' because it has already been executed", Version, migration.Key));
                     continue;
                 }
 
                 try
                 {
+                    LogHelper.Info<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - Running migration with key '{1}'", Version, migration.Key));
                     migration.Value.MigrationAction.Invoke(applicationContext);
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Error<Migrator>(string.Format("Migration '{0}' failed: {1}", migration.Key, ex.Message), ex);
+                    LogHelper.Error<Migrator>(string.Format("Lucrasoft uMigrations (version {0}) - Migration '{1}' failed: {2}", Version, migration.Key, ex.Message), ex);
                     throw;
                 }
 
