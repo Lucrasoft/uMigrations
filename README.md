@@ -16,4 +16,6 @@ uMigrations is not a Code-First library, nor does it aspire to be one. uMigratio
 Usage
 -----------
 
-See https://github.com/Lucrasoft/uMigrations/wiki/Usage for exmaples
+Install NuGet package: Lucrasoft.uMigrations
+
+See https://github.com/Lucrasoft/uMigrations/wiki/Usage for examples
